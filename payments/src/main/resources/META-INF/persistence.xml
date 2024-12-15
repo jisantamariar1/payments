@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+
+    <!-- Unidad de persistencia -->
+    <persistence-unit name="PaymentUnity" transaction-type="RESOURCE_LOCAL">
+        <!--
+            name: Nombre único de la unidad de persistencia, usado para referenciar esta configuración.
+            transaction-type: Define el manejo de transacciones. RESOURCE_LOCAL significa que no utiliza un manejador externo como JTA.
+        -->
+
+        <!-- Clases administradas -->
+        <!-- para tener otra tabla -->
+        <class>ec.edu.uce.jpa.Account</class>
+        <class>ec.edu.uce.jpa.User</class>
+        <class>ec.edu.uce.jpa.Payment</class>
+        <class>ec.edu.uce.jpa.Service</class>
+        <!--
+            Define las clases que serán gestionadas por JPA.
+            Esta sección es opcional si el escaneo automático de clases está habilitado.
+        -->
+
+        <!-- Configuración -->
+        <properties>
+            <!-- SECCIÓN: Conexión a la base de datos -->
+            <!--
+                Cambia esta sección si decides usar otro sistema de base de datos (por ejemplo, MySQL, Oracle, etc.).
+            -->
+            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <!-- Driver JDBC usado para conectar con la base de datos PostgreSQL. Cambiar según el motor de base de datos. -->
+
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/paymentdb"/>
+            <!-- URL de conexión a la base de datos. Incluye protocolo, host, puerto y nombre de la base de datos. -->
+
+            <property name="jakarta.persistence.jdbc.user" value="postgres"/>
+            <!-- Usuario usado para autenticar en la base de datos. -->
+
+            <property name="jakarta.persistence.jdbc.password" value="root"/>
+            <!-- Contraseña asociada al usuario. -->
+
+            <!-- SECCIÓN: Configuración específica del proveedor (Hibernate) -->
+            <!--
+                Cambia estas configuraciones si decides usar un proveedor distinto de Hibernate.
+            -->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <!-- Acción a realizar sobre las tablas al iniciar. Opciones comunes:
+                 - "validate": Valida el esquema existente sin modificarlo.
+                 - "update": Actualiza el esquema existente según las entidades.
+                 - "create": Crea un nuevo esquema, eliminando los datos existentes.
+                 - "create-drop": Igual que "create", pero elimina las tablas al cerrar la aplicación.
+            -->
+
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <!-- Dialecto específico de Hibernate para PostgreSQL. Indica a Hibernate cómo generar el SQL para esta base de datos. -->
+
+            <!-- SECCIÓN: Configuración de logs (opcional) -->
+            <!--
+                Estas configuraciones son útiles para depurar consultas SQL generadas por Hibernate.
+            -->
+            <property name="hibernate.show_sql" value="true"/>
+            <!-- Muestra las consultas SQL generadas en la consola. -->
+
+            <property name="hibernate.format_sql" value="true"/>
+            <!-- Formatea las consultas SQL para que sean más legibles. -->
+        </properties>
+    </persistence-unit>
+</persistence>
